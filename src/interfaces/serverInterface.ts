@@ -3,6 +3,6 @@ export interface ServerInterface {
     id: number;
     nombre: string;
     ip: string;
-    purto: number;
+    puerto: number;
     estado: 'activo' | 'inactivo';
 }
