@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { serverRouter } from './controllers/serversController';
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
@@ -25,7 +25,13 @@ const swaggerOptions = {
 app.use("/api/v1/servers", serverRouter);
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
+
+app.get('/live', (req: Request, res: Response) => {
+  res.send(`${new Date().toISOString()}`);
+});
+
 app.use("", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
