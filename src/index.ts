@@ -1,7 +1,12 @@
 import express, { Request, Response } from 'express';
 import { serverRouter } from './controllers/serversController';
+import { loginRouter } from './controllers/loginController';
+import dotenv from 'dotenv';
+
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
+
+dotenv.config();
 const app = express();
 const port = 3000;
 
@@ -22,6 +27,8 @@ const swaggerOptions = {
   apis: ['./src/controllers/*.ts'], // Ruta a tus archivos de rutas
 };
 
+app.use(express.json());
+app.use("/login", loginRouter);
 app.use("/api/v1/servers", serverRouter);
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
