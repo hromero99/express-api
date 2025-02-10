@@ -1,0 +1,25 @@
+[
+      {
+        "id": 1,
+        "nombre": "Servidor Principal",
+        "ip": "192.168.1.10",
+        "puerto": 80,
+        "estado": "activo"
+      },
+      {
+        "id": 2,
+        "nombre": "Servidor Secundario",
+        "ip": "192.168.1.11",
+        "puerto": 8080,
+        "estado": "inactivo"
+      },
+      {
+        "id": 3,
+        "nombre": "Servidor de Pruebas",
+        "ip": "192.168.1.12",
+        "puerto": 3000,
+        "estado": "activo"
+      }
+    
+    ]
+  
