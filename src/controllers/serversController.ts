@@ -4,7 +4,44 @@ import { Router } from 'express';
 
 export const serverRouter = Router();
 const serverService = new ServerService();
-
+/**
+ * @swagger
+ * tags:
+ *   - name: Servers
+ *     description: Operaciones relacionadas con servidores
+ */
+/**
+ * @swagger
+ * /api/v1/servers :
+ *   get:
+ *     summary: Obtiene una lista de servidores
+ *     tags: [Servers]
+ *     responses:
+ *       200:
+ *         description: Lista de servidores
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     example: 1
+ *                   nombre:
+ *                     type: string
+ *                     example: Servidor 1
+ *                   ip:
+ *                     type: string
+ *                     example: 192.168.1.1
+ *                   puerto:
+ *                     type: integer
+ *                     example: 8080
+ *                   estado:
+ *                     type: string
+ *                     example: activo
+ */
 serverRouter.get('/', (req: Request, res: Response) => {
     const serversList = serverService.fetchAll();
     res.json(serversList);
