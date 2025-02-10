@@ -1,7 +1,8 @@
 import { ServerInterface } from "../interfaces/serverInterface";
 import serverData from "../data/server.json";
+import { ServiceInterface } from "../interfaces/serviceInterface";
 
-export class ServerService {
+export class ServerService implements ServiceInterface<ServerInterface> {
     private servers: ServerInterface[] = serverData as ServerInterface[];
 
     fetchAll(): ServerInterface[] {
