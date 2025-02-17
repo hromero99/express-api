@@ -12,11 +12,12 @@ loginRouter.post('', (req: Request, res: Response) => {
 
     const user: UserInterface[] = users.filter(u => u.email === email);
     if (user.length === 0) {
-        res.status(400).send('Usuario no encontrado');
+        res.status(404).send('Usuario no encontrado');
     }
+
     if (!process.env.TOKEN_SECRET) {
         res.status(500).send('Error del servidor: TOKEN_SECRET no está definido');
-   }
+    }
   
     const validPassword = bcrypt.compare(password, user[0].password).then((result) => {
         console.log(result);

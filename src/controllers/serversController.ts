@@ -49,7 +49,7 @@ serverRouter.get('/', (req: Request, res: Response) => {
 
 serverRouter.get('/:id', (req: Request, res: Response) => {
     const server = serverService.fetchById(parseInt(req.params.id));
-    if (server) {
+    if (server !== undefined) {
         res.json(server);
     } else {
         res.status(404).json({ message: 'Server not found' });
@@ -57,6 +57,9 @@ serverRouter.get('/:id', (req: Request, res: Response) => {
 });
 
 serverRouter.post('/', (req: Request, res: Response) => {
+    //TODO: Agregar el validador de los datos para que el Servidor este correcto
+    // const serverValidator = new ServerValidator(req.body)
+    // if (serverValidator)
     const newServer = serverService.create(req.body);
     res.status(201).json(newServer);
 });
