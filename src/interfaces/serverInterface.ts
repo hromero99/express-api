@@ -1,8 +1,10 @@
+import mongoose from "mongoose";
 
-export interface ServerInterface {
-    id: number;
+interface ServerInterface extends mongoose.Document {
     nombre: string;
     ip: string;
     puerto: number;
-    estado: 'activo' | 'inactivo';
+    estado: string;
 }
+
+export { ServerInterface };

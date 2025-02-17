@@ -1,42 +1,44 @@
 import { ServerInterface } from "../interfaces/serverInterface";
 import serverData from "../data/server.json";
 import { ServiceInterface } from "../interfaces/serviceInterface";
+import { ServerModel } from "../models/server";
 
 export class ServerService implements ServiceInterface<ServerInterface> {
-    private servers: ServerInterface[] = serverData as ServerInterface[];
 
-    fetchAll(): ServerInterface[] {
-        return this.servers;
+    async fetchAll(): Promise<ServerInterface[]> {
+        try {
+            const servers: ServerInterface[] = await ServerModel.find();
+            return servers;
+        } catch (error) {
+            console.error('Error al obtener los servidores:', error);
+            throw error;
+        }
     }
 
-    fetchById(id: number): ServerInterface | undefined {
-        return this.servers.find((server) => server.id === id);
+    async fetchById(id: string): Promise<ServerInterface> {
+        try {
+            const server: ServerInterface | null = await ServerModel.findById(id);
+            if (!server) {
+                throw new Error('Servidor no encontrado');
+            }
+            return server;
+        } catch (error) {
+            console.error('Error al obtener los servidores:', error);
+            throw error;
+        }
     }
 
-    create(server: ServerInterface): ServerInterface {
-        const newServer = { ...server, id: this.servers.length + 1 };
-        this.servers.push(newServer);
+    async create(server: ServerInterface): Promise<ServerInterface> {
+        const newServer = new ServerModel(server);
+        await newServer.save(); 
         return newServer;
     }
 
-    update(id: number, server: ServerInterface): ServerInterface | null {
-        const serverToUpdate = this.servers.filter((server) => server.id === id);
-        if (serverToUpdate.length > 0) {
-            const updatedServer = { ...serverToUpdate[0], ...server };
-            const finalList = this.servers.filter((server) => server.id !== id);
-            finalList.push(updatedServer);
-            this.servers = finalList;
-            return updatedServer;
-        }
-        return null;
+    update(id: string, server: ServerInterface): Promise<ServerInterface | null> {
+        return Promise.resolve(null);
     }
 
-    delete(id: number): boolean {
-        const serverToDelete = this.servers.filter((server) => server.id === id);
-        if (serverToDelete.length > 0) {
-            this.servers = this.servers.filter((server) => server.id !== id);
-            return true;
-        }
-        return false;
+    delete(id: string): Promise<boolean> {
+        return Promise.resolve(false);
     }
 }
